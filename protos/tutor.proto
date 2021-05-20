@@ -1,0 +1,13 @@
+syntax = "proto3";
+service Tutor {
+
+	rpc getQuestion(Empty) returns(Question) {}
+}
+
+
+message Question {
+	int32 id = 1;
+	string text = 2;
+}
+
+message Empty {}
