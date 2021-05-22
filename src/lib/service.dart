@@ -9,6 +9,18 @@ class TutorService extends TutorServiceBase {
       ..id = 0
       ..text = 'How are you?';
   }
+
+  @override
+  Future<Evaluation> sendAnswer(ServiceCall call, Answer answer) async {
+    final evaluation = Evaluation(id: 71, answerId: answer.id);
+
+    await Future.delayed(Duration(seconds: 2));
+
+    if (answer.text.contains('fine')) {
+      return evaluation..score = 10;
+    }
+    return evaluation..score = 0;
+  }
 }
 
 class Server {

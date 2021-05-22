@@ -19,8 +19,19 @@ class TutorConsoleClient {
     return question;
   }
 
+  Future sendAnswer(Answer answer) async {
+    final evaluation = await stub.sendAnswer(answer);
+    print('your score is ${evaluation.score}');
+  }
+
   Future<void> callService() async {
     await getQuestion();
+
+    await Future.delayed(Duration(seconds: 1));
+
+    await sendAnswer(Answer()
+      ..id = 100
+      ..text = 'I am fine');
     await channel.shutdown();
   }
 }
