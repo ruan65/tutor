@@ -2,7 +2,10 @@ syntax = "proto3";
 service Tutor {
 
 	rpc getQuestion(Empty) returns(Question) {}
+
 	rpc sendAnswer(Answer) returns(Evaluation) {}
+
+	rpc getQuestions(Empty) returns(stream Question) {}
 }
 
 

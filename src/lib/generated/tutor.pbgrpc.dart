@@ -22,6 +22,10 @@ class TutorClient extends $grpc.Client {
       '/Tutor/sendAnswer',
       ($0.Answer value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Evaluation.fromBuffer(value));
+  static final _$getQuestions = $grpc.ClientMethod<$0.Empty, $0.Question>(
+      '/Tutor/getQuestions',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Question.fromBuffer(value));
 
   TutorClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -36,6 +40,13 @@ class TutorClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Evaluation> sendAnswer($0.Answer request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$sendAnswer, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.Question> getQuestions($0.Empty request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getQuestions, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -57,6 +68,13 @@ abstract class TutorServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Answer.fromBuffer(value),
         ($0.Evaluation value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.Question>(
+        'getQuestions',
+        getQuestions_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.Question value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Question> getQuestion_Pre(
@@ -69,8 +87,15 @@ abstract class TutorServiceBase extends $grpc.Service {
     return sendAnswer(call, await request);
   }
 
+  $async.Stream<$0.Question> getQuestions_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
+    yield* getQuestions(call, await request);
+  }
+
   $async.Future<$0.Question> getQuestion(
       $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Evaluation> sendAnswer(
       $grpc.ServiceCall call, $0.Answer request);
+  $async.Stream<$0.Question> getQuestions(
+      $grpc.ServiceCall call, $0.Empty request);
 }

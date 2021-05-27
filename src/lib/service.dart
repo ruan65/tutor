@@ -1,5 +1,6 @@
 import 'package:grpc/src/server/call.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'core/questions_db_driver.dart';
 import 'generated/tutor.pbgrpc.dart';
 
 class TutorService extends TutorServiceBase {
@@ -20,6 +21,14 @@ class TutorService extends TutorServiceBase {
       return evaluation..score = 10;
     }
     return evaluation..score = 0;
+  }
+
+  @override
+  Stream<Question> getQuestions(ServiceCall call, Empty request) async* {
+    for (var question in questionsDb) {
+      yield question;
+      await Future.delayed(Duration(seconds: 5));
+    }
   }
 }
 

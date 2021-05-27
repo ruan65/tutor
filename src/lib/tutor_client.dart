@@ -19,19 +19,26 @@ class TutorConsoleClient {
     return question;
   }
 
+  Future<void> questionsStream(Empty request) async {
+    await for (var question in stub.getQuestions(request)) {
+      print(question);
+    }
+  }
+
   Future sendAnswer(Answer answer) async {
     final evaluation = await stub.sendAnswer(answer);
     print('your score is ${evaluation.score}');
   }
 
   Future<void> callService() async {
-    await getQuestion();
+//     await getQuestion();
 
-    await Future.delayed(Duration(seconds: 1));
+//     await Future.delayed(Duration(seconds: 1));
 
-    await sendAnswer(Answer()
-      ..id = 100
-      ..text = 'I am fine');
+//     await sendAnswer(Answer()
+//       ..id = 100
+//       ..text = 'I am fine');
+    await questionsStream(Empty());
     await channel.shutdown();
   }
 }
