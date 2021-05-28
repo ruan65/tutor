@@ -26,6 +26,10 @@ class TutorClient extends $grpc.Client {
       '/Tutor/getQuestions',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Question.fromBuffer(value));
+  static final _$sendAnswers = $grpc.ClientMethod<$0.Answer, $0.ExamEvaluation>(
+      '/Tutor/sendAnswers',
+      ($0.Answer value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ExamEvaluation.fromBuffer(value));
 
   TutorClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -47,6 +51,13 @@ class TutorClient extends $grpc.Client {
     return $createStreamingCall(
         _$getQuestions, $async.Stream.fromIterable([request]),
         options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ExamEvaluation> sendAnswers(
+      $async.Stream<$0.Answer> request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$sendAnswers, request, options: options)
+        .single;
   }
 }
 
@@ -75,6 +86,13 @@ abstract class TutorServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.Question value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Answer, $0.ExamEvaluation>(
+        'sendAnswers',
+        sendAnswers,
+        true,
+        false,
+        ($core.List<$core.int> value) => $0.Answer.fromBuffer(value),
+        ($0.ExamEvaluation value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Question> getQuestion_Pre(
@@ -98,4 +116,6 @@ abstract class TutorServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Answer request);
   $async.Stream<$0.Question> getQuestions(
       $grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.ExamEvaluation> sendAnswers(
+      $grpc.ServiceCall call, $async.Stream<$0.Answer> request);
 }

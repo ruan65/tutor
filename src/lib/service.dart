@@ -27,8 +27,19 @@ class TutorService extends TutorServiceBase {
   Stream<Question> getQuestions(ServiceCall call, Empty request) async* {
     for (var question in questionsDb) {
       yield question;
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 1));
     }
+  }
+
+  @override
+  Future<ExamEvaluation> sendAnswers(
+      ServiceCall call, Stream<Answer> answersStream) async {
+    var score = 0;
+    await for (var answer in answersStream) {
+      print(answer);
+      score++;
+    }
+    return ExamEvaluation()..totalScore = score;
   }
 }
 

@@ -6,6 +6,8 @@ service Tutor {
 	rpc sendAnswer(Answer) returns(Evaluation) {}
 
 	rpc getQuestions(Empty) returns(stream Question) {}
+
+	rpc sendAnswers(stream Answer) returns(ExamEvaluation) {}
 }
 
 
@@ -31,6 +33,14 @@ message Evaluation {
 	int32 id = 1;
 	int32 answerId = 2;
 	int32 score = 3;
+}
+
+
+message ExamEvaluation {
+	int32 studentId = 1;
+	int64 timeStamp = 2;
+	repeated Evaluation answerEvaluation = 3;
+	int32 totalScore = 4;
 }
 
 message Empty {}

@@ -55,6 +55,19 @@ const Evaluation$json = const {
 
 /// Descriptor for `Evaluation`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List evaluationDescriptor = $convert.base64Decode('CgpFdmFsdWF0aW9uEg4KAmlkGAEgASgFUgJpZBIaCghhbnN3ZXJJZBgCIAEoBVIIYW5zd2VySWQSFAoFc2NvcmUYAyABKAVSBXNjb3Jl');
+@$core.Deprecated('Use examEvaluationDescriptor instead')
+const ExamEvaluation$json = const {
+  '1': 'ExamEvaluation',
+  '2': const [
+    const {'1': 'studentId', '3': 1, '4': 1, '5': 5, '10': 'studentId'},
+    const {'1': 'timeStamp', '3': 2, '4': 1, '5': 3, '10': 'timeStamp'},
+    const {'1': 'answerEvaluation', '3': 3, '4': 3, '5': 11, '6': '.Evaluation', '10': 'answerEvaluation'},
+    const {'1': 'totalScore', '3': 4, '4': 1, '5': 5, '10': 'totalScore'},
+  ],
+};
+
+/// Descriptor for `ExamEvaluation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List examEvaluationDescriptor = $convert.base64Decode('Cg5FeGFtRXZhbHVhdGlvbhIcCglzdHVkZW50SWQYASABKAVSCXN0dWRlbnRJZBIcCgl0aW1lU3RhbXAYAiABKANSCXRpbWVTdGFtcBI3ChBhbnN3ZXJFdmFsdWF0aW9uGAMgAygLMgsuRXZhbHVhdGlvblIQYW5zd2VyRXZhbHVhdGlvbhIeCgp0b3RhbFNjb3JlGAQgASgFUgp0b3RhbFNjb3Jl');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',

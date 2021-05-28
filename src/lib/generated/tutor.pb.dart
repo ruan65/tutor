@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Question extends $pb.GeneratedMessage {
@@ -297,6 +298,89 @@ class Evaluation extends $pb.GeneratedMessage {
   $core.bool hasScore() => $_has(2);
   @$pb.TagNumber(3)
   void clearScore() => clearField(3);
+}
+
+class ExamEvaluation extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExamEvaluation', createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'studentId', $pb.PbFieldType.O3, protoName: 'studentId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timeStamp', protoName: 'timeStamp')
+    ..pc<Evaluation>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'answerEvaluation', $pb.PbFieldType.PM, protoName: 'answerEvaluation', subBuilder: Evaluation.create)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalScore', $pb.PbFieldType.O3, protoName: 'totalScore')
+    ..hasRequiredFields = false
+  ;
+
+  ExamEvaluation._() : super();
+  factory ExamEvaluation({
+    $core.int? studentId,
+    $fixnum.Int64? timeStamp,
+    $core.Iterable<Evaluation>? answerEvaluation,
+    $core.int? totalScore,
+  }) {
+    final _result = create();
+    if (studentId != null) {
+      _result.studentId = studentId;
+    }
+    if (timeStamp != null) {
+      _result.timeStamp = timeStamp;
+    }
+    if (answerEvaluation != null) {
+      _result.answerEvaluation.addAll(answerEvaluation);
+    }
+    if (totalScore != null) {
+      _result.totalScore = totalScore;
+    }
+    return _result;
+  }
+  factory ExamEvaluation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ExamEvaluation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ExamEvaluation clone() => ExamEvaluation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ExamEvaluation copyWith(void Function(ExamEvaluation) updates) => super.copyWith((message) => updates(message as ExamEvaluation)) as ExamEvaluation; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ExamEvaluation create() => ExamEvaluation._();
+  ExamEvaluation createEmptyInstance() => create();
+  static $pb.PbList<ExamEvaluation> createRepeated() => $pb.PbList<ExamEvaluation>();
+  @$core.pragma('dart2js:noInline')
+  static ExamEvaluation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExamEvaluation>(create);
+  static ExamEvaluation? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get studentId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set studentId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStudentId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStudentId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get timeStamp => $_getI64(1);
+  @$pb.TagNumber(2)
+  set timeStamp($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTimeStamp() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTimeStamp() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<Evaluation> get answerEvaluation => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.int get totalScore => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set totalScore($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasTotalScore() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTotalScore() => clearField(4);
 }
 
 class Empty extends $pb.GeneratedMessage {
