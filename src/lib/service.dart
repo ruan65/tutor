@@ -35,10 +35,18 @@ class TutorService extends TutorServiceBase {
   Future<ExamEvaluation> sendAnswers(
       ServiceCall call, Stream<Answer> answersStream) async {
     var score = 0;
-    await for (var answer in answersStream) {
-      print(answer);
-      score++;
-    }
+//     await for (var answer in answersStream) {
+//       print(answer);
+//       score++;
+//     }
+    answersStream.listen(
+        (answer) {
+          print('got answer: $answer');
+        },
+        onDone: () => print('done!'),
+        onError: (er) {
+          print('stream error: $er');
+        });
     return ExamEvaluation()..totalScore = score;
   }
 }

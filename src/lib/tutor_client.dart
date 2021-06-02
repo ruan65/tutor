@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:grpc/grpc.dart';
-import 'package:pedantic/pedantic.dart';
 
 import 'core/questions_db_driver.dart';
 import 'generated/tutor.pbgrpc.dart';
@@ -34,8 +33,10 @@ class TutorConsoleClient {
     print('your score is ${evaluation.score}');
   }
 
-  Future<ExamEvaluation> sendAnswers() async {
+  Future sendAnswers() async {
     final answersStream = StreamController<Answer>();
+
+    final evaluation = stub.sendAnswers(answersStream.stream);
 
     for (var question in questionsDb) {
       answersStream.add(Answer()
@@ -44,10 +45,9 @@ class TutorConsoleClient {
         ..text = 'hz');
       await Future.delayed(Duration(seconds: 1));
     }
-    unawaited(answersStream.close());
-    final evaluation = await stub.sendAnswers(answersStream.stream);
+//     await answersStream.close();
 
-    return evaluation;
+    print(evaluation);
   }
 
   Future<void> callService() async {
@@ -58,9 +58,8 @@ class TutorConsoleClient {
 //     await sendAnswer(Answer()
 //       ..id = 100
 //       ..text = 'I am fine');
-//     await questionsStream(Empty());
-    final evaluation = await sendAnswers();
-    print(evaluation);
+    await questionsStream(Empty());
+    await sendAnswers();
     await channel.shutdown();
   }
 }
