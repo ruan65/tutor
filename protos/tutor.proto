@@ -8,6 +8,8 @@ service Tutor {
 	rpc getQuestions(Empty) returns(stream Question) {}
 
 	rpc sendAnswers(stream Answer) returns(ExamEvaluation) {}
+
+	rpc liveEvaluation(stream Answer) returns(stream Question) {}
 }
 
 

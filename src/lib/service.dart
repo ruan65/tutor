@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:grpc/src/server/call.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'core/questions_db_driver.dart';
@@ -36,10 +38,27 @@ class TutorService extends TutorServiceBase {
       ServiceCall call, Stream<Answer> answersStream) async {
     var score = 0;
     await for (var answer in answersStream) {
-      print(answer);
+      print('got answer: $answer');
       score++;
     }
     return ExamEvaluation()..totalScore = score;
+  }
+
+  @override
+  Stream<Question> liveEvaluation(ServiceCall call, Stream<Answer> answer) {
+    var index = 0;
+
+    final questionStream = StreamController<Question>();
+    questionStream.add(questionsDb[index]);
+    answer.listen((event) async {
+      if (index < questionsDb.length - 1) {
+        index++;
+      }
+      questionStream.add(questionsDb[index]);
+
+      await Future.delayed(Duration(seconds: 2));
+    });
+    return questionStream.stream;
   }
 }
 
