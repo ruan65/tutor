@@ -11,7 +11,7 @@ class TutorConsoleClient {
   late final ClientChannel channel;
   late final String arg;
 
-  TutorConsoleClient(this.arg) {
+  TutorConsoleClient([this.arg = '']) {
     channel = ClientChannel('127.0.0.1',
         port: 5555,
         options: ChannelOptions(credentials: ChannelCredentials.insecure()));
@@ -57,7 +57,7 @@ class TutorConsoleClient {
     final answersStream = StreamController<Answer>();
     final questionsStream = stub.liveEvaluation(answersStream.stream);
 
-    questionsStream.listen((question) {
+    questionsStream.listen((question) async {
       print('got live question: $question');
       final id = question.id;
 
@@ -65,6 +65,7 @@ class TutorConsoleClient {
         ..question = question
         ..id = 777
         ..text = 'yes+$id';
+      await Future.delayed(Duration(seconds: 3));
       answersStream.add(answer);
     });
   }
@@ -86,7 +87,6 @@ class TutorConsoleClient {
 }
 
 Future<void> main(List<String> args) async {
-  print('arg0: ${args[0]}');
-  final client = TutorConsoleClient(args[0]);
+  final client = TutorConsoleClient();
   await client.callService();
 }

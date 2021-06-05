@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:grpc/src/server/call.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:pedantic/pedantic.dart';
 import 'core/questions_db_driver.dart';
 import 'generated/tutor.pbgrpc.dart';
 
@@ -51,12 +52,19 @@ class TutorService extends TutorServiceBase {
     final questionStream = StreamController<Question>();
     questionStream.add(questionsDb[index]);
     answer.listen((event) async {
+      print('got answer on server: $event');
       if (index < questionsDb.length - 1) {
         index++;
+      } else {
+        unawaited(questionStream.close());
+        return;
       }
+      await Future.delayed(Duration(seconds: 2));
       questionStream.add(questionsDb[index]);
 
       await Future.delayed(Duration(seconds: 2));
+    }, onError: (err) {
+      print('cought an error: $err');
     });
     return questionStream.stream;
   }
